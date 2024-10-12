@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex flex-wrap align-items-center p-5 pt-3 ">
+    <div class="col-6 ">
+        <h1>Welcome to Django Blog</h1>
+        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el
+            texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se
+            dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un
+            libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en
+            documentos electrónicos,</p>
+    </div>
+    <div class="col-3">
+        <img style="width: 500px;" src="" alt="" srcset="">
+    </div>
+</div>
+
+
+<div class="d-flex flex-wrap px-3 p-3">
+    <div class="col-2 card p-2">
+        <h5>All Categories</h5>
+        <form id="categoryForm" method="GET" action="">
+            <!-- Show All Option -->
+            <!-- <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="showAll" 
+                       value="show_all" 
+                       {% if not category_slug %}checked{% endif %}
+                       onchange="document.getElementById('showAll').action = '{% url 'show_all' %}'; document.getElementById('showAll').submit();">
+                <label class="form-check-label" for="showAll">
+                    Show All
+                </label>
+            </div> -->
+        
+            <!-- Categories Options -->
+            {% for cate in category %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="{{cate.id}}" 
+                       value="{{cate.slug}}" 
+                       {% if cate.slug == category_slug %}checked{% endif %}
+                       onchange="document.getElementById('categoryForm').action = '{% url 'categories_wise_show' cate.slug %}'; document.getElementById('categoryForm').submit();">
+                <label class="form-check-label" for="{{cate.id}}">
+                    {{cate.name}}
+                </label>
+            </div>
+            {% endfor %}
+        </form>
+        
+        
+    </div>
+
+<div class="col-8 p-3">
+    <h2>Post All</h2>
+    <h4>{{ post|length }} result(s) found</h4>
+    <div class="d-flex flex-wrap pt-5">
+        {% for p in post %}
+        <div class="col-sm-3 mb-3 mb-sm-0">
+            <div class="card mx-2">
+                <!-- Display Book Image -->
+                <img src="{{ p.image.url }}" class="card-img-top" alt="{{ p.title }}">
+                
+                <div class="card-body">
+                    <!-- Book Title -->
+                    <h5 class="card-title">
+                        <a class="text-decoration-none text-dark" href="#">{{ p.title }}</a>
+                    </h5>
+
+                    <!-- Book Description (limited words) -->
+                    <p>{{ p.description | truncatechars:10 }}</p>
+
+                    <!-- Borrowing Price -->
+                    <p><strong>Borrowing Price:</strong> ${{ p.borrowing_price }}</p>
+
+                    <!-- Display User Reviews -->
+
+                    <!-- Display Book Categories -->
+                    <p><strong>Category:</strong>
+                        {% for cat in p.category.all %}
+                        <button class="btn btn-danger btn-sm m-1" disabled>{{ cat.name }}</button>
+                        {% endfor %}
+
+                    </p>
+                    <a href="{% url 'details' p.id %}" class="btn btn-warning text-center">Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</div>
+{% endblock %}

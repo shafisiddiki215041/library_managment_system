@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex card m-2 justify-content-center w-100 align-items-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">After Borrow Balance</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Return Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for borrow in purchases %}
+            <tr>
+                <td>{{ borrow.book.id }}</td>
+                <td>{{ borrow.book.title }}</td>
+                <td>{{ borrow.book.borrowing_price }}</td>
+                <td></td>
+                <td>{{ borrow.borrrow_date }}</td>
+                <td></td>
+            </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
