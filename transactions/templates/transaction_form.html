@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                {% if title == 'Request For Loan' %}
+                <div class="text-center">
+                    <a class="font-bold text-primary mb-4" href="{% url 'loan_list' %}">View All Loan List</a>
+                </div>
+                {% endif %}
+
+                <h1 class="font-weight-bold text-center mb-4">{{ title }}</h1>
+                <form method="post" class="p-4">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control" name="amount" id="amount" required placeholder="Amount">
+                    </div>
+
+                    {% if title == 'Money Transfer' %}
+                    <div class="mb-3">
+                        <label for="account_id" class="form-label">Account ID</label>
+                        <input type="number" class="form-control" name="account_id" id="account_id" required placeholder="Account ID">
+                    </div>
+                    {% endif %}
+
+                    {% if form.amount.errors %}
+                    {% for error in form.amount.errors %}
+                    <div class="text-danger mb-2">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if form.account_id.errors %}
+                    {% for error in form.account_id.errors %}
+                    <div class="text-danger mb-2">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

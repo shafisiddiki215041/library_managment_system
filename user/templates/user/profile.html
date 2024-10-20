@@ -1,5 +1,13 @@
 {% extends "base.html" %}
+
 {% block content %}
+
+{% if request.user.is_authenticated %}
+<div class="p-5">
+    <a href="{% url 'deposite_money' %}" class="btn btn-primary" role="button">Deposit Money</a>
+</div>
+{% endif %}
+
 
 <div class="d-flex card m-2 justify-content-center w-100 align-items-center">
     <table class="table">
@@ -9,21 +17,30 @@
                 <th scope="col">Book Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">After Borrow Balance</th>
-                <th scope="col">Release Date</th>
+                <th scope="col">Borrow Date</th>
                 <th scope="col">Return Date</th>
-                
+                <th scope="col">Return Button</th>
             </tr>
         </thead>
         <tbody>
+
             {% for borrow in purchases %}
             <tr>
                 <td>{{ borrow.book.id }}</td>
                 <td>{{ borrow.book.title }}</td>
                 <td>{{ borrow.book.borrowing_price }}</td>
-                <td></td>
+                <td>{{ borrow.balance_after_transaction }}</td>
+
                 <td>{{ borrow.borrrow_date }}</td>
-                <td></td>
-            </tr>   
+
+                <td>{{ borrow.return_date|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if not borrow.return_date %}
+                    <a class="btn btn-outline-warning" href="{% url 'return_books' borrow.id %}">Return</a>
+                    {% endif %}
+
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

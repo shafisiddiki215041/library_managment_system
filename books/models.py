@@ -15,6 +15,7 @@ class Book(models.Model):
         return self.title
     
 class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     book = models.ForeignKey(Book,related_name='reviews', on_delete=models.CASCADE)
     rating = models.IntegerField(null=False)
     name = models.CharField(max_length=30)
@@ -30,6 +31,7 @@ class Borrow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrrow_date = models.DateTimeField(auto_now_add=True)
+    return_date = models.DateTimeField(null=True, blank=True)
+
     
-    def __str__(self):
-        return self.book.title
+    

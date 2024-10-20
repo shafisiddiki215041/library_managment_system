@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/',include('user.urls')),
     path('books/',include('books.urls')),
-    path('homepage/',views.home, name=
+    path('',views.home, name=
     "homepage"),
     path('category/<slug:category_slug>/', views.home, name='categories_wise_show'),
     path('show_all/', views.home, name='show_all'),
